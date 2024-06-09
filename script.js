@@ -1,28 +1,24 @@
-const jokeEl = document.getElementById('joke');
 const jokeBtn = document.getElementById('jokeBtn');
-
-
-
-jokeBtn.addEventListener('click', generateJoke);
+const jokeEl = document.getElementById('joke');
 
 // USING ASYNC/AWAIT
 async function generateJoke() {
-  const config = {
+  const res = await fetch('https://icanhazdadjoke.com', {
     headers: {
-      Accept: 'application/json',
-    },
-  }
+      "accept":'application/json',
+    }
+  })
+  const data = await res.json();
 
-  const res = await fetch('https://icanhazdadjoke.com', config);
-  then((res) => res.json())
-
-  then((data) => {
-    jokeEl.innerHTML = data.joke})
-  return res 
-  
-    
+  jokeEl.innerText = data.joke;
 }
-console.log(res);
+
+generateJoke();
+
+jokeBtn.addEventListener('click', () => {
+  generateJoke()
+});
+
 //   HINTS
 // USING .then()
 // function generateJoke() {
@@ -37,4 +33,4 @@ console.log(res);
 //     .then((data) => {
 //       jokeEl.innerHTML = data.joke
 //     })
-// }
+// 
